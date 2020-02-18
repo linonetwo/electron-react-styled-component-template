@@ -1,3 +1,3 @@
-# Ankitron
+# electron-react-styled-component-template
 
-Anki alternative app for spaced repetition, with user experience and extensibility in mind.
+Useable template!
