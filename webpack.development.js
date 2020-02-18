@@ -1,9 +1,8 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CspHtmlWebpackPlugin = require("csp-html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const merge = require("webpack-merge");
-const base = require("./webpack.config");
 const path = require("path");
+const base = require("./webpack.config");
 
 module.exports = merge(base, {
   mode: "development",
@@ -19,8 +18,13 @@ module.exports = merge(base, {
       ignored: /node_modules/ // Ignore this path, probably not needed since we define contentBase above
     }
   },
+  resolve: {
+    alias: {
+      'react-dom$': 'react-dom/profiling',
+      'scheduler/tracing': 'scheduler/tracing-profiling',
+    },
+  },
   plugins: [
-    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "app/src/index.html"),
       filename: "index.html"
@@ -29,9 +33,14 @@ module.exports = merge(base, {
       "base-uri": ["'self'"],
       "object-src": ["'none'"],
       "script-src": ["'self'"],
-      "style-src": ["'self'"],
+      "style-src": ["'self' 'unsafe-inline'"],
       "frame-src": ["'none'"],
       "worker-src": ["'none'"]
-    })
+    },
+    {
+      nonceEnabled: {
+        'style-src': false,
+      },
+    },)
   ]
 })
