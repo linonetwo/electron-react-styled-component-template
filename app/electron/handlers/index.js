@@ -1,0 +1,1 @@
+require('../../libs/babel/registerBabel');
